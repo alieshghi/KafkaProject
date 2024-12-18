@@ -21,7 +21,7 @@ namespace Kafka.FirstConsumer
                 {
                     collection.Configure<ConfigModel>(context.Configuration.GetSection("Kafka"));
                     collection.AddHostedService<ConsumerHostedService>();
-                    collection.AddSingleton<ICallEltService, CallEltService>();
+                    collection.AddSingleton<ICallEltService, CallEltService>(); 
                 });
 
         static void Main(string[] args)
