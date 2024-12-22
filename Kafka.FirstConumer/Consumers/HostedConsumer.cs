@@ -34,8 +34,8 @@ namespace Kafka.FirstConsumer.Consumers
         public Task StartAsync(CancellationToken cancellationToken)
         {
             
-            _clusterClient.ConsumeFromLatest(_config.TopicName); //"sida-update-data"
-            //_clusterClient.ConsumeFromEarliest(_config.Value.TopicName); //"sida-update-data"
+            //_clusterClient.ConsumeFromLatest(_config.TopicName); //"sida-update-data"
+            _clusterClient.ConsumeFromEarliest(_config.TopicName); //"sida-update-data"
             _clusterClient.MessageReceived += record =>
             {
                 if (record.Value != null)
