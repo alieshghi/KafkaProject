@@ -1,2 +1,10 @@
 docker run -d --network=kafka --name=zookeeper -e ZOOKEEPER_CLIENT_PORT=2181 -e ZOOKEEPER_TICK_TIME=212000 -p 2181:2181 confluentinc/cp-zookeeper
 docker run -d --network=kafka --name=kafka -p 9092:9092 -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092 confluentinc/cp-kafka
+
+
+
+docker exec -it kafka /bin/bash
+cd /opt/kafka/bin
+
+./kafka-consumer-groups.sh --bootstrap-server kafka:9092 --list
+./kafka-consumer-groups.sh --bootstrap-server kafka:9092 --group <your group name> --describe

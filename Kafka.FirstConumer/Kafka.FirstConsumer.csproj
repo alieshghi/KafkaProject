@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-	  <DockerfileRunArguments>--network kafka</DockerfileRunArguments>
+	<DockerfileRunArguments>--network kafka</DockerfileRunArguments>
   </PropertyGroup>
 
   <ItemGroup>

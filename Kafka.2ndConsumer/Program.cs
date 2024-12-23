@@ -23,53 +23,53 @@ namespace Kafka._2ndConsumer
         static void Main(string[] args)
         {
 
-            CreateHostBuilder(args).Build().Run();
+            //CreateHostBuilder(args).Build().Run();
 
 
-            //// Load configuration
-            //var config = new ConfigurationBuilder()
-            //    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-            //    .Build();
+            // Load configuration
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
 
-            //// Kafka Consumer configuration
-            //var consumerConfig = new ConsumerConfig
-            //{
-            //    BootstrapServers = config["Kafka:BootstrapServers"],
-            //    GroupId = "console-consumer-group", // Consumer group ID
-            //    AutoOffsetReset = AutoOffsetReset.Earliest, // Read messages from the beginning
-            //    EnableAutoCommit = true
-            //};
+            // Kafka Consumer configuration
+            var consumerConfig = new ConsumerConfig
+            {
+                BootstrapServers = config["Kafka:BootstrapServers"],
+                GroupId = "test-consumer-group", // Consumer group ID
+                AutoOffsetReset = AutoOffsetReset.Earliest, // Read messages from the beginning
+                //EnableAutoCommit = true
+            };
 
-            //using var consumer = new ConsumerBuilder<Ignore, string>(consumerConfig).Build();
-            //consumer.Subscribe(config["Kafka:TopicName"]);
+            using var consumer = new ConsumerBuilder<Ignore, string>(consumerConfig).Build();
+            consumer.Subscribe(config["Kafka:TopicName"]);
 
-            //Console.WriteLine("Listening for messages...");
+            Console.WriteLine("Listening for messages...");
 
-            //try
-            //{
-            //    while (true)
-            //    {
-            //        try
-            //        {
-            //            // Poll for new messages
-            //            var consumeResult = consumer.Consume(CancellationToken.None);
-            //            Console.WriteLine($"Received message at {consumeResult.TopicPartitionOffset}: {consumeResult.Value}");
-            //        }
-            //        catch (ConsumeException e)
-            //        {
-            //            Console.WriteLine($"Error consuming message: {e.Error.Reason}");
-            //        }
-            //    }
-            //}
-            //catch (OperationCanceledException)
-            //{
-            //    // Handle graceful shutdown
-            //    Console.WriteLine("Closing consumer...");
-            //}
-            //finally
-            //{
-            //    consumer.Close();
-            //}
+            try
+            {
+                while (true)
+                {
+                    try
+                    {
+                        // Poll for new messages
+                        var consumeResult = consumer.Consume(CancellationToken.None);
+                        Console.WriteLine($"Received message at {consumeResult.TopicPartitionOffset}: {consumeResult.Value}");
+                    }
+                    catch (ConsumeException e)
+                    {
+                        Console.WriteLine($"Error consuming message: {e.Error.Reason}");
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // Handle graceful shutdown
+                Console.WriteLine("Closing consumer...");
+            }
+            finally
+            {
+                consumer.Close();
+            }
         }
         public class ConsumerHostedService : IHostedService
         {
