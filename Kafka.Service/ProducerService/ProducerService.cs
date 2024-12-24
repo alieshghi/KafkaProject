@@ -39,7 +39,12 @@ namespace Kafka.Service.ProducerService
         {
             try
             {
-                await _producer.ProduceAsync(_config.TopicName, new Message<Null, string>()
+                //process-order-topic
+                //await _producer.ProduceAsync(_config.TopicName, new Message<Null, string>()
+                //{
+                //    Value = model.Message
+                //});
+                await _producer.ProduceAsync("process-order-topic", new Message<Null, string>()
                 {
                     Value = model.Message
                 });
